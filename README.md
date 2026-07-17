@@ -24,4 +24,26 @@ The project is decoupled into a clear backend/frontend separation:
 
 This project uses `uv` for lightning-fast dependency management.
 
-cd AgenticAI_LangGraph
+2. Set up the virtual environment and install dependencies
+
+Bash
+uv venv
+source .venv/bin/activate
+uv pip install -r requirements.txt
+
+
+3. Configure Environment Variables
+Create a .env file in the root directory and add your Google API Key:
+
+Code snippet
+GOOGLE_API_KEY=your_google_api_key_here
+
+
+4. Run the Streamlit App
+
+Bash
+streamlit run 10_Chatbot_With_UI/streamlit_frontend.py
+
+
+📝 License
+This project is open-source and available under the MIT License.

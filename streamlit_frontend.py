@@ -31,7 +31,7 @@ if len(st.session_state['message_history']) == 0:
                 Meet your personal AI assistant
             </h1>
             <p style="font-size: 1.2rem; color: #888888;">
-                Powered by LangGraph & Gemini 3.5 Flash
+                Powered by LangGraph & Gemini
             </p>
             <p style="font-size: 1.2rem; color: #888888;">
                 Made by M Hamza

@@ -33,6 +33,9 @@ if len(st.session_state['message_history']) == 0:
             <p style="font-size: 1.2rem; color: #888888;">
                 Powered by LangGraph & Gemini 3.5 Flash
             </p>
+            <p style="font-size: 1.2rem; color: #888888;">
+                Made by M Hamza
+            </p>
         </div>
         """, 
         unsafe_allow_html=True

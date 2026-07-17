@@ -12,7 +12,7 @@ class ChatState(TypedDict):
 
     messages: Annotated[list[BaseMessage], add_messages]
 
-llm = ChatGoogleGenerativeAI(model='gemini-3.5-flash')
+llm = ChatGoogleGenerativeAI(model='gemini-3.1-flash-lite')
 
 def chat_node(state: ChatState):
     # take user query from state

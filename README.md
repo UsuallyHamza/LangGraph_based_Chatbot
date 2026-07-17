@@ -12,7 +12,7 @@ An interactive, memory-persistent AI chatbot built to demonstrate core Agentic A
 ## 🛠️ Tech Stack
 * **Frameworks:** LangGraph, LangChain
 * **Frontend:** Streamlit
-* **LLM:** Google Generative AI (`gemini-3.5-flash`)
+* **LLM:** Google Generative AI (`gemini-3.1-flash-lite`)
 * **Environment & Package Management:** `uv`
 
 ## 📁 Project Architecture

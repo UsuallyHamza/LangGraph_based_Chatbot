@@ -57,14 +57,23 @@ if user_input:
         st.markdown(user_input)
     
     with st.chat_message('assistant'):
-        # st.write_stream automatically returns the full, concatenated string
-        full_response = st.write_stream(
-            message_chunk.content for message_chunk, metadata in chatbot.stream(  #this returns a python generator
+        # 1. Custom generator function to peel off the raw JSON data block structures
+        def stream_content():
+            for message_chunk, metadata in chatbot.stream( 
                 {'messages': [HumanMessage(content=user_input)]},
-                config = {'configurable': {'thread_id': 'thread_1'}},
-                stream_mode= 'messages'
-            )
-        )
+                config=CONFIG,
+                stream_mode='messages'
+            ):
+                content = message_chunk.content
+                # Look inside the multimodal list block and yield only the pure text
+                if isinstance(content, list) and len(content) > 0:
+                    yield content[0].get('text', '')
+                # Fallback if it returns a standard string chunk
+                elif isinstance(content, str):
+                    yield content
 
-    # Append the full string directly to the history (with the typo fixed!)
+        # 2. st.write_stream consumes our generator and prints smooth text to the UI
+        full_response = st.write_stream(stream_content())
+
+    # 3. Append the clean final string response directly to history
     st.session_state['message_history'].append({'role': 'assistant', 'content': full_response})

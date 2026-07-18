@@ -4,7 +4,7 @@ from langchain_core.messages import HumanMessage
 
 # Configure the page to be centered and clean
 st.set_page_config(
-    page_title="Gemini AI Assistant", 
+    page_title="LangGraph based AI Assistant", 
     page_icon="🤖", 
     layout="centered", 
     initial_sidebar_state="collapsed"
@@ -16,14 +16,13 @@ CONFIG = {'configurable': {'thread_id': 'thread_1'}}
 if 'message_history' not in st.session_state:
     st.session_state['message_history'] = []
 
-# --- GEMINI STYLE LANDING PAGE ---
 # If there are no messages, show the beautiful centered greeting space
 if len(st.session_state['message_history']) == 0:
     # Creating vertical spacing using empty containers
     for _ in range(4):
         st.write("")
     
-    # Custom HTML/CSS for that premium gradient-friendly clean text
+    # Custom HTML/CSS for that premium gradient friendly clean text
     st.markdown(
         """
         <div style="text-align: center;">
@@ -41,7 +40,7 @@ if len(st.session_state['message_history']) == 0:
         unsafe_allow_html=True
     )
 
-# --- CHAT HISTORY FLOW ---
+# CHAT HISTORY FLOW
 # If there are messages, render them cleanly with markdown formatting
 for message in st.session_state['message_history']:
     with st.chat_message(message['role']):

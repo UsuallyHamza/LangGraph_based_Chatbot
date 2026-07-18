@@ -51,23 +51,20 @@ for message in st.session_state['message_history']:
 user_input = st.chat_input('Ask Gemini...')
 
 if user_input:
-    # 1. Instantly append and display user message (this clears the landing page)
+    # Add user message to history and display it
     st.session_state['message_history'].append({'role': 'user', 'content': user_input})
     with st.chat_message('user'):
         st.markdown(user_input)
     
-    # 2. Invoke the compiled LangGraph chatbot backend
-    with st.spinner(""): # Empty spinner keeps it ultra-clean like Gemini's silent loading state
-        response = chatbot.invoke({'messages': [HumanMessage(content=user_input)]}, config=CONFIG)
-    
-    # 3. Extract the raw response text from the multimodal block safely
-    raw_content = response['messages'][-1].content
-    if isinstance(raw_content, list):
-        ai_message = raw_content[0]['text']
-    else:
-        ai_message = str(raw_content)
-    
-    # 4. Append and render the assistant's response
-    st.session_state['message_history'].append({'role': 'assistant', 'content': ai_message})
     with st.chat_message('assistant'):
-        st.markdown(ai_message)
+        # st.write_stream automatically returns the full, concatenated string
+        full_response = st.write_stream(
+            message_chunk.content for message_chunk, metadata in chatbot.stream(  #this returns a python generator
+                {'messages': [HumanMessage(content=user_input)]},
+                config = {'configurable': {'thread_id': 'thread_1'}},
+                stream_mode= 'messages'
+            )
+        )
+
+    # Append the full string directly to the history (with the typo fixed!)
+    st.session_state['message_history'].append({'role': 'assistant', 'content': full_response})
